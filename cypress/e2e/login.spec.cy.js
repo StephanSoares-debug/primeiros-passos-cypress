@@ -17,7 +17,8 @@ describe('Orange HRM Tests', () => {
     GenericField: '.oxd-input--active',
     dateField: '[placeholder="yyyy-dd-mm"]',
     SaveButton: '[type="submit"]',
-    
+    NationalityComboBox: ':nth-child(5) > :nth-child(1) > :nth-child(1) > .oxd-input-group > :nth-child(2) > .oxd-select-wrapper > .oxd-select-text > .oxd-select-text-input',
+    MartialStatusComboBox: ':nth-child(2) > .oxd-input-group > :nth-child(2) > .oxd-select-wrapper > .oxd-select-text > .oxd-select-text-input',
 
   }
  
@@ -36,8 +37,10 @@ describe('Orange HRM Tests', () => {
     cy.get(selectorsList.GenericField).eq(5).clear().type('OtherID123')
     cy.get(selectorsList.GenericField).eq(6).clear().type('DriverLicenceNumber123')
     cy.get(selectorsList.dateField).eq(0).clear().type("2026-18-04").click()
-    cy.get(':nth-child(5) > :nth-child(1) > :nth-child(1) > .oxd-input-group > :nth-child(2) > .oxd-select-wrapper > .oxd-select-text > .oxd-select-text-input').click()
+    cy.get(selectorsList.NationalityComboBox).click()
     cy.get('.oxd-select-dropdown > :nth-child(4)').click()
+    cy.get(selectorsList.MartialStatusComboBox).click()
+    cy.get ('.oxd-select-dropdown > :nth-child(3)').click()
     cy.get(selectorsList.SaveButton).eq(0).click()
     cy.get('body').should('contain', 'Successfully Updated')
 
