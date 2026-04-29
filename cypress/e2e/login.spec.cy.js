@@ -1,15 +1,14 @@
 import UserData from '../fixtures/userData.json'
+import LoginPage from '../pages/loginPage.js'
+
+const loginPage = new LoginPage()
 
 describe('Orange HRM Tests', () => {
 
   const selectorsList  = {
 
-    usernameField: '[name="username"]',
-    passwordField: '[name="password"]',
-    loginbutton: '.oxd-button',
     sectionTitleTopBar: '.oxd-topbar-header-breadcrumb > .oxd-text',
     dashboadGrid: '.orangehrm-dashboard-grid',
-    WrongCredentialAlert: '.oxd-alert',
     MyinfoButtom: '[href="/web/index.php/pim/viewMyDetails"]',
     FirstNameField: '[name="firstName"]',
     MiddleNameField: '[name="middleName"]',
@@ -19,15 +18,13 @@ describe('Orange HRM Tests', () => {
     SaveButton: '[type="submit"]',
     NationalityComboBox: ':nth-child(5) > :nth-child(1) > :nth-child(1) > .oxd-input-group > :nth-child(2) > .oxd-select-wrapper > .oxd-select-text > .oxd-select-text-input',
     MartialStatusComboBox: ':nth-child(2) > .oxd-input-group > :nth-child(2) > .oxd-select-wrapper > .oxd-select-text > .oxd-select-text-input',
-
+    
   }
  
   it.only('Login - Success and update Myinfo', () => {
+    loginPage.acessLoginPage()
+    loginPage.loginWithUser(UserData.UserSucess.username, UserData.UserSucess.password)
 
-    cy.visit('/auth/login')
-    cy.get(selectorsList.usernameField).clear().type(UserData.UserSucess.username)
-    cy.get(selectorsList.passwordField).clear().type(UserData.UserSucess.password)
-    cy.get(selectorsList.loginbutton).click()
     cy.location('pathname').should('equals', '/web/index.php/dashboard/index')
     cy.get(selectorsList.dashboadGrid)
     cy.get(selectorsList.MyinfoButtom).click()
@@ -41,8 +38,10 @@ describe('Orange HRM Tests', () => {
     cy.get('.oxd-select-dropdown > :nth-child(4)').click()
     cy.get(selectorsList.MartialStatusComboBox).click()
     cy.get ('.oxd-select-dropdown > :nth-child(3)').click()
+    cy.get(selectorsList.dateField).eq(1).clear().type("1993-12-03").click()
     cy.get(selectorsList.SaveButton).eq(0).click()
     cy.get('body').should('contain', 'Successfully Updated')
+
 
 
   })
@@ -59,4 +58,6 @@ describe('Orange HRM Tests', () => {
 
 
   )
-})
+}
+
+)
